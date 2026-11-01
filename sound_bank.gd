@@ -4,15 +4,15 @@ var muted: bool = false:
 	set(value):
 		muted = value
 		if muted:
-			for voice in voices:
+			for voice: Variant in voices:
 				voice.stop()
 var voices: Array[AudioStreamPlayer] = []
 var next_voice: int = 0
 var tones: Dictionary = {}
 
 func _ready() -> void:
-	for i in 4:
-		var player := AudioStreamPlayer.new()
+	for i: Variant in 4:
+		var player: Variant = AudioStreamPlayer.new()
 		player.volume_db = -15.0
 		add_child(player)
 		voices.append(player)
@@ -25,24 +25,24 @@ func _ready() -> void:
 func play_sound(sound: String) -> void:
 	if muted or not tones.has(sound):
 		return
-	var voice := voices[next_voice]
+	var voice: Variant = voices[next_voice]
 	next_voice = (next_voice + 1) % voices.size()
 	voice.stream = tones[sound]
 	voice.play()
 
 func _tone(from_hz: float, to_hz: float, duration: float) -> AudioStreamWAV:
-	const RATE := 22050
-	var data := PackedByteArray()
+	const RATE: Variant = 22050
+	var data: Variant = PackedByteArray()
 	data.resize(int(duration * RATE) * 2)
-	var phase := 0.0
-	for i in data.size() / 2:
-		var t := float(i) / float(data.size() / 2)
-		var frequency := lerpf(from_hz, to_hz, t)
+	var phase: Variant = 0.0
+	for i: Variant in data.size() / 2:
+		var t: Variant = float(i) / float(data.size() / 2)
+		var frequency: Variant = lerpf(from_hz, to_hz, t)
 		phase += TAU * frequency / RATE
-		var envelope := minf(t * 35.0, 1.0) * pow(1.0 - t, 2.0)
-		var sample := int((sin(phase) * 0.85 + sin(phase * 2.0) * 0.15) * envelope * 15000)
+		var envelope: Variant = minf(t * 35.0, 1.0) * pow(1.0 - t, 2.0)
+		var sample: Variant = int((sin(phase) * 0.85 + sin(phase * 2.0) * 0.15) * envelope * 15000)
 		data.encode_s16(i * 2, sample)
-	var stream := AudioStreamWAV.new()
+	var stream: Variant = AudioStreamWAV.new()
 	stream.format = AudioStreamWAV.FORMAT_16_BITS
 	stream.mix_rate = RATE
 	stream.data = data

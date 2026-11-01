@@ -1,4 +1,3 @@
-class_name SnakeModel
 extends RefCounted
 ## Deterministic grid rules. No scene tree, rendering, sound or save dependencies.
 
@@ -15,7 +14,7 @@ var turn_queue: Array[Vector2i] = []
 var food: Vector2i = Vector2i(-1, -1)
 var score: int = 0
 var state: State = State.READY
-var rng := RandomNumberGenerator.new()
+var rng: Variant = RandomNumberGenerator.new()
 var eaten: int = 0
 var last_reason: String = ""
 
@@ -27,8 +26,8 @@ func reset(seed_value: int = -1) -> void:
 	size.x = maxi(size.x, START_LENGTH + 1)
 	size.y = maxi(size.y, 2)
 	body.clear()
-	var head := Vector2i(maxi(START_LENGTH - 1, size.x / 2), size.y / 2)
-	for i in START_LENGTH:
+	var head: Variant = Vector2i(maxi(START_LENGTH - 1, size.x / 2), size.y / 2)
+	for i: Variant in START_LENGTH:
 		body.append(head - Vector2i(i, 0))
 	direction = Vector2i.RIGHT
 	turn_queue.clear()
@@ -66,7 +65,7 @@ func tick() -> String:
 	var growing: bool = head == food
 	# Moving into the departing tail is legal when not eating.
 	var occupied_count: int = body.size() if growing else body.size() - 1
-	for i in occupied_count:
+	for i: Variant in occupied_count:
 		if body[i] == head:
 			return _die("self")
 	body.push_front(head)
@@ -86,11 +85,11 @@ func spawn_food() -> bool:
 	# Enumerating free cells is bounded and succeeds even at 447/448 occupancy.
 	var free: Array[Vector2i] = []
 	var occupied: Dictionary = {}
-	for cell in body:
+	for cell: Variant in body:
 		occupied[cell] = true
-	for y in size.y:
-		for x in size.x:
-			var cell := Vector2i(x, y)
+	for y: Variant in size.y:
+		for x: Variant in size.x:
+			var cell: Variant = Vector2i(x, y)
 			if not occupied.has(cell):
 				free.append(cell)
 	if free.is_empty():

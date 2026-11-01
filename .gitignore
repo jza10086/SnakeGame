@@ -3,3 +3,7 @@ build/
 *.tmp
 *.log
 .DS_Store
+*.TMP
+__pycache__/
+*.pyc
+/config/
