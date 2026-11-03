@@ -1,0 +1,38 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: zh_Hans\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "2–8 人各自独立棋盘，实时排行榜，一条生命，每个食物 10 分。"
+msgstr "2–8 人各自独立棋盘，实时排行榜，一条生命，每个食物 10 分。"
+
+msgid "GodotPartyDefault · 贪吃蛇"
+msgstr "GodotPartyDefault · 贪吃蛇"
+
+msgid "向上"
+msgstr "向上"
+
+msgid "向下"
+msgstr "向下"
+
+msgid "向右"
+msgstr "向右"
+
+msgid "向左"
+msgstr "向左"
+
+msgid "本机偏好"
+msgstr "本机偏好"
+
+msgid "比赛时限（秒）"
+msgstr "比赛时限（秒）"
+
+msgid "游戏规则"
+msgstr "游戏规则"
+
+msgid "速度档位"
+msgstr "速度档位"
+
+msgid "音效"
+msgstr "音效"

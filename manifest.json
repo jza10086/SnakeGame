@@ -47,5 +47,14 @@
       "audience": "instance"
     }
   },
-  "introduction": "2–8 人各自独立棋盘，实时排行榜，一条生命，每个食物 10 分。"
+  "introduction": "2–8 人各自独立棋盘，实时排行榜，一条生命，每个食物 10 分。",
+  "localization": {
+    "supported_locales": [
+      "zh_Hans"
+    ],
+    "fallback_locale": "zh_Hans",
+    "translations": {
+      "zh_Hans": "i18n/zh_Hans.po"
+    }
+  }
 }
