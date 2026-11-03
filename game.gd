@@ -15,13 +15,14 @@ var speed: float = 1.0
 
 func build_game() -> void:
 	heading.text = "贪吃蛇 · 独立竞速"
-	footer.text = "WASD 移动（可在本地设置改键） · 一条生命 · 同分并列 · 切出窗口不会暂停"
+	footer.text = "WASD：移动 · 一条生命"
 	sounds = Sounds.new()
 	add_child(sounds)
 	board = Board.new()
 	board.model = model
 	board.set("surface", stage)
 	stage.add_child(board)
+	compose_fullscreen_hud()
 
 func start_game() -> void:
 	speed = {"舒缓": 0.8, "标准": 1.0, "高速": 1.25}.get(settings.get("speed", "标准"), 1.0)
