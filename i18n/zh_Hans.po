@@ -4,8 +4,8 @@ msgstr ""
 "Language: zh_Hans\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-msgid "2–8 人各自独立棋盘，实时排行榜，一条生命，每个食物 10 分。"
-msgstr "2–8 人各自独立棋盘，实时排行榜，一条生命，每个食物 10 分。"
+msgid "1–8 人 3D 贪吃蛇：单人挑战或独立棋盘竞速，一条生命，每个食物 10 分。"
+msgstr "1–8 人 3D 贪吃蛇：单人挑战或独立棋盘竞速，一条生命，每个食物 10 分。"
 
 msgid "GodotPartyDefault · 贪吃蛇"
 msgstr "GodotPartyDefault · 贪吃蛇"

@@ -1,11 +1,12 @@
 extends "res://games/protocols/godot_party_default_protocol/ranked_round.gd"
 ## Independent responsive boards. The host bounds monotonic progress and owns the deadline.
 const Model: Script = preload("res://games/minigame/godot_party_default_snake_game/snake_model.gd")
-const Board: Script = preload("res://games/minigame/godot_party_default_snake_game/board_view.gd")
+const BoardView: Script = preload("res://games/minigame/godot_party_default_snake_game/board_view.gd")
+const Board: PackedScene = preload("res://games/minigame/godot_party_default_snake_game/board_view.tscn")
 const Sounds: Script = preload("res://games/minigame/godot_party_default_snake_game/sound_bank.gd")
 var sounds: Node
-var model: RefCounted = Model.new()
-var board: Node2D
+var model: Model = Model.new()
+var board: BoardView
 var timer: float = 0.0
 var reporting: float = 0.0
 var steps: int = 0
@@ -14,15 +15,19 @@ var records: Dictionary = {}
 var speed: float = 1.0
 
 func build_game() -> void:
-	heading.text = "贪吃蛇 · 独立竞速"
-	footer.text = "WASD：移动 · 一条生命"
+	heading.text = "3D 贪吃蛇 · 单人挑战 / 多人竞速"
+	footer.text = "WASD / 方向键：移动 · 一条生命"
 	sounds = Sounds.new()
 	add_child(sounds)
-	board = Board.new()
+	board = Board.instantiate()
 	board.model = model
-	board.set("surface", stage)
-	stage.add_child(board)
+	add_child(board)
 	compose_fullscreen_hud()
+	$Background.hide()
+
+## Let the selected protocol apply the shared 3D graphics preferences.
+func godot_party_graphics_targets() -> Dictionary:
+	return {"world": board.world, "sun": board.sun, "materials_root": board}
 
 func start_game() -> void:
 	speed = {"舒缓": 0.8, "标准": 1.0, "高速": 1.25}.get(settings.get("speed", "标准"), 1.0)
@@ -92,7 +97,10 @@ func make_snapshot() -> Dictionary:
 func render_game() -> void:
 	if view.is_empty():
 		return
-	status.text = "剩余 %d 秒 · %s" % [ceili(view.time), "观战中" if local_id.is_empty() else ("本局已结束，等待其他玩家" if reported_done else "每个食物 10 分")]
+	var progress: String = "观战中"
+	if not local_id.is_empty():
+		progress = "%d 分 · %s" % [model.score, "本局已结束，等待结算" if reported_done else "每个食物 10 分"]
+	status.text = "剩余 %d 秒 · %s" % [ceili(view.time), progress]
 	var lines: PackedStringArray = []
 	for player: Dictionary in players:
 		var record: Dictionary = view.records.get(player.player_id, {})

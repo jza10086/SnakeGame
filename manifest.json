@@ -1,12 +1,13 @@
 {
   "manifest_version": 2,
   "core_api_major": 4,
-  "package_version": "1.0.0",
+  "package_version": "1.1.0",
   "id": "godot_party_default_snake_game",
   "name": "GodotPartyDefault · 贪吃蛇",
   "kind": "minigame",
   "entry": "game.tscn",
   "player_counts": [
+    1,
     2,
     3,
     4,
@@ -47,7 +48,7 @@
       "audience": "instance"
     }
   },
-  "introduction": "2–8 人各自独立棋盘，实时排行榜，一条生命，每个食物 10 分。",
+  "introduction": "1–8 人 3D 贪吃蛇：单人挑战或独立棋盘竞速，一条生命，每个食物 10 分。",
   "localization": {
     "supported_locales": [
       "zh_Hans"
