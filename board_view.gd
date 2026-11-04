@@ -134,8 +134,19 @@ func _build_eyes() -> void:
 func _fit_camera() -> void:
 	var viewport_size: Vector2 = get_viewport().get_visible_rect().size
 	var aspect: float = viewport_size.x / viewport_size.y
-	camera.size = maxf((model.size.x + 5.0) / aspect, model.size.y * 0.81 + 5.0)
-	camera.look_at(Vector3.ZERO)
+	var half_fov: float = tan(deg_to_rad(camera.fov * 0.5))
+	var half_width: float = (model.size.x + 0.8) * 0.5
+	var half_depth: float = (model.size.y + 0.8) * 0.5
+	var distance: float = 0.0
+	# Fit the nearest board corners into the perspective frustum, leaving room for the edge HUD.
+	for x: float in [-half_width, half_width]:
+		for z: float in [-half_depth, half_depth]:
+			for y: float in [-0.8, 1.2]:
+				var corner: Vector3 = camera.basis.inverse() * Vector3(x, y, z)
+				var horizontal: float = absf(corner.x) / (half_fov * aspect * 0.9)
+				var vertical: float = absf(corner.y) / (half_fov * 0.78)
+				distance = maxf(distance, corner.z + maxf(horizontal, vertical))
+	camera.position = camera.basis.z * distance
 
 func cell_center(cell: Vector2i) -> Vector3:
 	return Vector3(cell.x - (model.size.x - 1) * 0.5, 0.43, cell.y - (model.size.y - 1) * 0.5)

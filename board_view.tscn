@@ -30,7 +30,6 @@ directional_shadow_max_distance = 65.0
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1012611868]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 0.5900422, 0.80737245, 0, -0.80737245, 0.5900422, 0, 26, 19)
-projection = 1
 current = true
-size = 21.0
+fov = 45.0
 far = 100.0
