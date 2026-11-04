@@ -4,7 +4,7 @@ const Model: Script = preload("res://games/minigame/godot_party_default_snake_ga
 const MINT: Color = Color("#79ebba")
 const CORAL: Color = Color("#ff9b77")
 
-var model: Model
+var model: Model = Model.new()
 var previous_body: Array[Vector2i] = []
 var movement: float = 1.0
 var death_flash: float = 0.0
@@ -12,9 +12,9 @@ var elapsed: float = 0.0
 var food_pop: float = 1.0
 var segments: Array[MeshInstance3D] = []
 var links: Array[MeshInstance3D] = []
-var eyes: Node3D
-var food_visual: Node3D
-var bite_ring: MeshInstance3D
+@onready var eyes: Node3D = $Field/Eyes
+@onready var food_visual: Node3D = $Field/Food
+@onready var bite_ring: MeshInstance3D = $Field/BiteRing
 var bite_age: float = 1.0
 var snake_material: StandardMaterial3D
 var segment_mesh: SphereMesh
@@ -35,9 +35,6 @@ func _ready() -> void:
 	link_mesh.bottom_radius = 0.32
 	link_mesh.height = 1.0
 	link_mesh.radial_segments = 12
-	_build_field()
-	_build_food()
-	_build_eyes()
 	get_viewport().size_changed.connect(_fit_camera)
 	_fit_camera()
 
@@ -54,82 +51,6 @@ func _mesh(parent: Node3D, shape: Mesh, material: Material, location: Vector3) -
 	visual.position = location
 	parent.add_child(visual)
 	return visual
-
-func _box(dimensions: Vector3, location: Vector3, material: Material) -> void:
-	var shape: BoxMesh = BoxMesh.new()
-	shape.size = dimensions
-	_mesh(self, shape, material, location)
-
-func _build_field() -> void:
-	var width: float = float(model.size.x)
-	var depth: float = float(model.size.y)
-	_box(Vector3(width + 0.8, 0.65, depth + 0.8), Vector3(0, -0.43, 0), _material(Color("#193e48")))
-	# Two instanced tile meshes keep the full grid inexpensive to draw.
-	for parity: int in 2:
-		var tile: BoxMesh = BoxMesh.new()
-		tile.size = Vector3(0.97, 0.12, 0.97)
-		tile.material = _material(Color("#15343c") if parity == 0 else Color("#183b43"))
-		var tiles: MultiMesh = MultiMesh.new()
-		tiles.transform_format = MultiMesh.TRANSFORM_3D
-		tiles.mesh = tile
-		var cells: Array[Vector2i] = []
-		for y: int in model.size.y:
-			for x: int in model.size.x:
-				if (x + y) % 2 == parity:
-					cells.append(Vector2i(x, y))
-		tiles.instance_count = cells.size()
-		for index: int in cells.size():
-			var location: Vector3 = cell_center(cells[index])
-			location.y = -0.06
-			tiles.set_instance_transform(index, Transform3D(Basis.IDENTITY, location))
-		var visual: MultiMeshInstance3D = MultiMeshInstance3D.new()
-		visual.multimesh = tiles
-		add_child(visual)
-	var rim: StandardMaterial3D = _material(Color("#4c9b98"), 0.35)
-	for sign_value: float in [-1.0, 1.0]:
-		_box(Vector3(width + 0.65, 0.2, 0.18), Vector3(0, 0.03, sign_value * (depth * 0.5 + 0.2)), rim)
-		_box(Vector3(0.18, 0.2, depth + 0.65), Vector3(sign_value * (width * 0.5 + 0.2), 0.03, 0), rim)
-
-func _build_food() -> void:
-	food_visual = Node3D.new()
-	add_child(food_visual)
-	var apple: SphereMesh = SphereMesh.new()
-	apple.radius = 0.34
-	apple.height = 0.62
-	_mesh(food_visual, apple, _material(CORAL, 0.22), Vector3.ZERO)
-	var stem: CylinderMesh = CylinderMesh.new()
-	stem.top_radius = 0.035
-	stem.bottom_radius = 0.05
-	stem.height = 0.23
-	_mesh(food_visual, stem, _material(Color("#815941")), Vector3(0, 0.36, 0))
-	var leaf: SphereMesh = SphereMesh.new()
-	leaf.radius = 0.16
-	leaf.height = 0.09
-	var leaf_visual: MeshInstance3D = _mesh(food_visual, leaf, _material(MINT), Vector3(0.13, 0.4, 0))
-	leaf_visual.scale.z = 0.5
-	leaf_visual.rotation.z = 0.3
-	var ring: TorusMesh = TorusMesh.new()
-	ring.inner_radius = 0.35
-	ring.outer_radius = 0.4
-	ring.rings = 32
-	ring.ring_segments = 8
-	bite_ring = _mesh(self, ring, _material(CORAL), Vector3.ZERO)
-	bite_ring.hide()
-
-func _build_eyes() -> void:
-	eyes = Node3D.new()
-	add_child(eyes)
-	var white: StandardMaterial3D = _material(Color("#effff5"), 0.22)
-	var dark: StandardMaterial3D = _material(Color("#102d2b"), 0.22)
-	for sign_value: float in [-1.0, 1.0]:
-		var eye: SphereMesh = SphereMesh.new()
-		eye.radius = 0.13
-		eye.height = 0.22
-		_mesh(eyes, eye, white, Vector3(0.18, 0.31, sign_value * 0.2))
-		var pupil: SphereMesh = SphereMesh.new()
-		pupil.radius = 0.065
-		pupil.height = 0.10
-		_mesh(eyes, pupil, dark, Vector3(0.22, 0.39, sign_value * 0.2))
 
 func _fit_camera() -> void:
 	var viewport_size: Vector2 = get_viewport().get_visible_rect().size

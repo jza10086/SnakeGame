@@ -36,3 +36,12 @@ msgstr "速度档位"
 
 msgid "音效"
 msgstr "音效"
+
+msgid "hud.progress"
+msgstr "{score} 分 · {state}"
+
+msgid "hud.time"
+msgstr "剩余 {time} 秒 · {progress}"
+
+msgid "hud.player"
+msgstr "{player}  {score} 分  {state}"

@@ -4,6 +4,8 @@
 
 [ext_resource type="PackedScene" path="res://games/protocols/godot_party_default_protocol/ranked_round.tscn" id="round"]
 
+[ext_resource type="PackedScene" path="res://games/minigame/godot_party_default_snake_game/board_view.tscn" id="board"]
+
 [node name="Game" instance=ExtResource("round")]
 layout_mode = 3
 anchors_preset = 15
@@ -12,3 +14,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1")
+
+[node name="Background" parent="GameCanvas" index="0"]
+visible = false
+
+[node name="Heading" parent="OverlayHUD/Standard/Counters" index="0"]
+text = "3D 贪吃蛇 · 单人挑战 / 多人竞速"
+
+[node name="Footer" parent="OverlayHUD/Standard" index="1"]
+text = "WASD / 方向键：移动 · 一条生命\nEsc：菜单"
+
+[node name="Board" parent="." instance=ExtResource("board")]
+unique_name_in_owner = true

@@ -2,11 +2,10 @@ extends "res://games/protocols/godot_party_default_protocol/ranked_round.gd"
 ## Independent responsive boards. The host bounds monotonic progress and owns the deadline.
 const Model: Script = preload("res://games/minigame/godot_party_default_snake_game/snake_model.gd")
 const BoardView: Script = preload("res://games/minigame/godot_party_default_snake_game/board_view.gd")
-const Board: PackedScene = preload("res://games/minigame/godot_party_default_snake_game/board_view.tscn")
 const Sounds: Script = preload("res://games/minigame/godot_party_default_snake_game/sound_bank.gd")
 var sounds: Node
-var model: Model = Model.new()
-var board: BoardView
+@onready var board: BoardView = %Board
+@onready var model: Model = board.model
 var timer: float = 0.0
 var reporting: float = 0.0
 var steps: int = 0
@@ -15,15 +14,8 @@ var records: Dictionary = {}
 var speed: float = 1.0
 
 func build_game() -> void:
-	heading.text = "3D 贪吃蛇 · 单人挑战 / 多人竞速"
-	footer.text = "WASD / 方向键：移动 · 一条生命"
 	sounds = Sounds.new()
 	add_child(sounds)
-	board = Board.instantiate()
-	board.model = model
-	add_child(board)
-	compose_fullscreen_hud()
-	$Background.hide()
 
 ## Let the selected protocol apply the shared 3D graphics preferences.
 func godot_party_graphics_targets() -> Dictionary:
@@ -99,10 +91,8 @@ func render_game() -> void:
 		return
 	var progress: String = "观战中"
 	if not local_id.is_empty():
-		progress = "%d 分 · %s" % [model.score, "本局已结束，等待结算" if reported_done else "每个食物 10 分"]
-	status.text = "剩余 %d 秒 · %s" % [ceili(view.time), progress]
-	var lines: PackedStringArray = []
+		progress = api.i18n.text(&"hud.progress", {"score": model.score, "state": "本局已结束，等待结算" if reported_done else "每个食物 10 分"})
+	status.text = api.i18n.text(&"hud.time", {"time": ceili(view.time), "progress": progress})
 	for player: Dictionary in players:
 		var record: Dictionary = view.records.get(player.player_id, {})
-		lines.append("%s  %d 分  %s" % [player.name, record.get("score", 0), "结束" if record.get("done", false) else "挑战中"])
-	standings.text = "\n".join(lines)
+		update_standing(player.player_id, api.i18n.text(&"hud.player", {"player": player.name, "score": record.get("score", 0), "state": "结束" if record.get("done", false) else "挑战中"}))
