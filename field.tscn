@@ -1,4 +1,6 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://vvtbd6ixnurw"]
+
+[ext_resource type="Shader" uid="uid://bxu2cygv3rrd8" path="res://games/minigame/godot_party_default_snake_game/board_grid.gdshader" id="1_wyb7v"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6anpb"]
 albedo_color = Color(0.09803922, 0.24313726, 0.28235295, 1)
@@ -6,32 +8,6 @@ roughness = 0.7
 
 [sub_resource type="BoxMesh" id="BoxMesh_wyb7v"]
 size = Vector3(28.8, 0.65, 16.8)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0nye3"]
-albedo_color = Color(0.08235294, 0.20392157, 0.23529412, 1)
-roughness = 0.7
-
-[sub_resource type="BoxMesh" id="BoxMesh_uwhp5"]
-material = SubResource("StandardMaterial3D_0nye3")
-size = Vector3(0.97, 0.12, 0.97)
-
-[sub_resource type="MultiMesh" id="MultiMesh_4el15"]
-transform_format = 1
-instance_count = 224
-mesh = SubResource("BoxMesh_uwhp5")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mb8sr"]
-albedo_color = Color(0.09411765, 0.23137255, 0.2627451, 1)
-roughness = 0.7
-
-[sub_resource type="BoxMesh" id="BoxMesh_4vb3f"]
-material = SubResource("StandardMaterial3D_mb8sr")
-size = Vector3(0.97, 0.12, 0.97)
-
-[sub_resource type="MultiMesh" id="MultiMesh_jl8er"]
-transform_format = 1
-instance_count = 224
-mesh = SubResource("BoxMesh_4vb3f")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_olol3"]
 albedo_color = Color(0.29803923, 0.60784316, 0.59607846, 1)
@@ -108,18 +84,23 @@ height = 0.22
 radius = 0.065
 height = 0.1
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0nye3"]
+render_priority = 0
+shader = ExtResource("1_wyb7v")
+shader_parameter/grid_size = Vector2(28, 16)
+shader_parameter/tile_dark = Color(0.082, 0.204, 0.235, 1)
+shader_parameter/tile_light = Color(0.094, 0.231, 0.263, 1)
+shader_parameter/line_color = Color(0.3, 0.52, 0.54, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_uwhp5"]
+size = Vector2(28, 16)
+
 [node name="Field" type="Node3D" unique_id=1060984919]
 
 [node name="Base" type="MeshInstance3D" parent="." unique_id=2132570520]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.43, 0)
 material_override = SubResource("StandardMaterial3D_6anpb")
 mesh = SubResource("BoxMesh_wyb7v")
-
-[node name="LightTiles" type="MultiMeshInstance3D" parent="." unique_id=2144921186]
-multimesh = SubResource("MultiMesh_4el15")
-
-[node name="DarkTiles" type="MultiMeshInstance3D" parent="." unique_id=1836490441]
-multimesh = SubResource("MultiMesh_jl8er")
 
 [node name="NorthRim" type="MeshInstance3D" parent="." unique_id=947757652]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, -8.2)
@@ -185,3 +166,9 @@ mesh = SubResource("SphereMesh_xb7h2")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.22, 0.39, 0.2)
 material_override = SubResource("StandardMaterial3D_fag1g")
 mesh = SubResource("SphereMesh_dc8f5")
+
+[node name="Grid" type="MeshInstance3D" parent="." unique_id=488554195]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.012, 0)
+material_override = SubResource("ShaderMaterial_0nye3")
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_uwhp5")
