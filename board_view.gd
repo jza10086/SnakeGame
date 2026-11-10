@@ -1,6 +1,6 @@
 extends Node3D
 ## 3D presentation of the classic X/Z grid. Collision and scoring stay in SnakeModel.
-const Model: Script = preload("res://games/minigame/godot_party_default_snake_game/snake_model.gd")
+const Model: Script = preload("res://games/minigame/gp_snake/snake_model.gd")
 const MINT: Color = Color("#79ebba")
 const CORAL: Color = Color("#ff9b77")
 

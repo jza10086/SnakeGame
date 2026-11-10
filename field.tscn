@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://vvtbd6ixnurw"]
 
-[ext_resource type="Shader" uid="uid://bxu2cygv3rrd8" path="res://games/minigame/godot_party_default_snake_game/board_grid.gdshader" id="1_wyb7v"]
+[ext_resource type="Shader" uid="uid://bxu2cygv3rrd8" path="res://games/minigame/gp_snake/board_grid.gdshader" id="1_wyb7v"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6anpb"]
 albedo_color = Color(0.09803922, 0.24313726, 0.28235295, 1)
