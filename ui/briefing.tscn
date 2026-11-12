@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="PackedScene" path="res://games/protocols/godot_party_default_protocol/briefing/briefing_page.tscn" id="1"]
+
+[node name="Briefing" instance=ExtResource("1")]
+
+[node name="Title" parent="View/Layout/Center/Content" index="0"]
+text = "GodotPartyDefault · 贪吃蛇"
+
+[node name="Introduction" parent="View/Layout/Center/Content/Columns/RightColumn/InformationPanel/InformationMargin/Information/Rules/InformationScroll" index="0"]
+text = "1–8 人 3D 贪吃蛇：单人挑战或独立棋盘竞速，一条生命，每个食物 10 分。"
+
+[editable path="View"]
