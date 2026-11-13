@@ -1,4 +1,9 @@
 extends "res://games/protocols/godot_party_default_protocol/ranked_round.gd"
+
+## Content-owned gameplay rules, independent of package compatibility.
+static func party_definition() -> Dictionary:
+	return {"player_counts": [1, 2, 3, 4, 5, 6, 7, 8], "tags": ["original"]}
+
 ## Independent responsive boards. The host bounds monotonic progress and owns the deadline.
 const Model: Script = preload("res://games/minigame/gp_snake/snake_model.gd")
 const BoardView: Script = preload("res://games/minigame/gp_snake/board_view.gd")

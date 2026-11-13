@@ -1,50 +1,10 @@
 {
-  "manifest_version": 2,
-  "core_api_major": 6,
-  "package_version": "1.1.15",
-  "id": "gp_snake",
   "name": "GodotPartyDefault · 贪吃蛇",
   "kind": "minigame",
-  "supported_systems": [
-    "windows"
-  ],
-  "entry": "game.tscn",
-  "player_counts": [
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8
-  ],
-  "tags": [
-    "original"
-  ],
+  "package_version": "0.0.1",
+  "framework_version": "0.0.1",
+  "remark": "",
   "dependencies": {
-    "godot_party_default_protocol": "1.0.14"
-  },
-  "adapters": [
-    {
-      "id": "standard",
-      "protocol": {
-        "id": "godot_party_default_protocol",
-        "api_major": 1,
-        "min_api_minor": 0
-      },
-      "entry": "adapter.gd"
-    }
-  ],
-  "config_schema": "settings.gd",
-  "introduction": "1–8 人 3D 贪吃蛇：单人挑战或独立棋盘竞速，一条生命，每个食物 10 分。",
-  "localization": {
-    "supported_locales": [
-      "zh_Hans"
-    ],
-    "fallback_locale": "zh_Hans",
-    "translations": {
-      "zh_Hans": "i18n/zh_Hans.po"
-    }
+    "godot_party_default_protocol": "~0.0.1"
   }
 }
