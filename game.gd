@@ -1,9 +1,9 @@
-extends "res://games/protocols/godot_party_default_protocol/ranked_round.gd"
+extends "res://games/protocols/GP_default_protocol/ranked_round.gd"
 
 ## Independent responsive boards. The host bounds monotonic progress and owns the deadline.
-const Model: Script = preload("res://games/minigame/gp_snake/snake_model.gd")
-const BoardView: Script = preload("res://games/minigame/gp_snake/board_view.gd")
-const Sounds: Script = preload("res://games/minigame/gp_snake/sound_bank.gd")
+const Model: Script = preload("res://games/minigame/GP_snake/snake_model.gd")
+const BoardView: Script = preload("res://games/minigame/GP_snake/board_view.gd")
+const Sounds: Script = preload("res://games/minigame/GP_snake/sound_bank.gd")
 var sounds: Node
 @onready var board: BoardView = %Board
 @onready var model: Model = board.model

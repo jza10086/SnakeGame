@@ -18,5 +18,5 @@ standard 排名协议。在原版小游戏轮换大厅仅选择本包即可 1–
 
 未带 `res://` 的源码路径以本包根目录为基准。
 
-- [M09 贪吃蛇　B　依赖 G01、G03](gp_snake_development.md)
-- [gp_snake_source](gp_snake_source.md)
+- [M09 贪吃蛇　B　依赖 G01、G03](GP_snake_development.md)
+- [GP_snake_source](GP_snake_source.md)
